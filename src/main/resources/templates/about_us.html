@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ff4d4d; /* Reddish background */
+            color: #fff; /* White text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: flyIn 1s ease-out;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff; /* White text */
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        p {
+            font-size: 20px;
+            line-height: 1.8;
+            font-weight: bold; /* Bold text */
+            margin-bottom: 20px;
+        }
+        @keyframes flyIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Us</h1>
+        <p>This website aims to provide a platform for managing clubs at RUET. Our mission is to foster a vibrant community where students can explore their interests, develop skills, and collaborate on meaningful projects.</p>
+        <p>Our vision is to create an inclusive environment that promotes creativity, leadership, and personal growth. We believe in the power of clubs to enhance the overall university experience and prepare students for successful careers.</p>
+    </div>
+</body>
+</html>

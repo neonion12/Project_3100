@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Sign Up Form</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling */
+            background-color: white; /* Set background to white */
+            display: flex; /* Use flexbox to center the form */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+        }
+
+        #bubbleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Send to back */
+        }
+
+        .form-box {
+            max-width: 500px;
+            max-height: 90vh; /* Set maximum height */
+            overflow-y: auto; /* Allow vertical scrolling */
+            background: rgba(241, 247, 254, 0.9); /* Transparent background */
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: #010101;
+            padding: 20px;
+            position: relative; /* Position relative for z-index */
+            z-index: 1; /* Bring form to front */
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+
+        /* Form text */
+        .title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        /* Inputs box */
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: rgb(0 0 0 / 8%) 0 1px 4px;
+        }
+
+        .input, .select {
+            background: none;
+            border: 0;
+            outline: 0;
+            height: 40px;
+            width: 100%;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input:focus, .select:focus {
+            border-bottom: 1px solid #0066ff;
+        }
+
+        /* Flexbox for name and series */
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px; /* Space between the two inputs */
+        }
+
+        /* Select dropdown styling */
+        .select {
+            appearance: none; /* Remove default arrow */
+            background-color: #fff;
+            padding-right: 30px; /* Space for custom arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%230066ff" viewBox="0 0 16 16" width="16" height="16"><path d="M1 4l7 7 7-7H1z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            cursor: pointer;
+        }
+
+        /* Button */
+        .form button {
+            background-color: #0066ff;
+            color: #fff;
+            border: 0;
+            border-radius: 24px;
+            padding: 10px 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color .3s ease;
+        }
+
+        .form button:hover {
+            background-color: #005ce6;
+        }
+
+        /* Form section */
+        .form-section {
+            padding: 16px;
+            font-size: 0.85rem;
+            background-color: #e0ecfb;
+            box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+        }
+
+        .form-section a {
+            font-weight: bold;
+            color: #0066ff;
+            transition: color .3s ease;
+        }
+
+        .form-section a :hover {
+            color: #005ce6;
+            text-decoration: underline;
+        }
+
+        /* Terms and Conditions */
+        .terms-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .terms-container input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px; /* Fixed height */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            resize: none;
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between password input and button */
+        }
+
+        .toggle-password {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: #0066ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bubbleCanvas"></canvas> <!-- Canvas for bubble effect -->
+    <div class="form-box">
+        <form class="form" onsubmit="return false;">
+            <span class="title">Sign up</span>
+            <span class="subtitle">Create a free account with your email.</span>
+            <div class="form-container">
+                <div class="flex-row">
+                    <input type="text" class="input" placeholder="Nickname" required style="flex: 1;">
+                    <input type="number" class="input" placeholder="Series" required style="flex: 1;">
+                </div>
+                <select id="department" name="department" class="select" required>
+                    <option value="" disabled selected>Select Department</option>
+                    <option value="CSE">CSE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="CE">CE</option>
+                    <option value="ME">ME</option>
+                    <option value="ECE">ECE</option>
+                    <option value="ETE">ETE</option>
+                    <option value="ChE">ChE</option>
+                    <option value="BECM">BECM</option>
+                    <option value="IPE">IPE</option>
+                    <option value="Architecture">Architecture</option>
+                </select>
+                <select id="gender" name="gender" class="select" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <input type="number" class="input" placeholder="Roll Number" required>
+                <input type="email" class="input" placeholder="Email" required>
+                <div class="password-container">
+                    <input type="password" class="input" id="password" placeholder="Password" required>
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">Show</button>
+                </div>
+                <div class="password-container">
+                    <input type="password" class="input" id="confirmPassword" placeholder="Confirm Password" required>
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">Show</button>
+                </div>
+                <div class="terms-container">
+                    <input type="checkbox" id="termsCheckbox" onchange="toggleSubmitButton()">
+                    <label for="termsCheckbox">I agree with the Terms & Policies</label>
+                </div>
+                <textarea readonly>
+1. We don't share your data.
+2. No bullying in clubs.
+3. No fighting in clubs.
+4. Respect others' privacy.
+5. No harassment of any kind.
+6. Follow community guidelines.
+7. Report any suspicious activity.
+8. Use appropriate language.
+9. No spamming or advertising.
+10. Keep your account secure.
+11. Don't share your password.
+12. Be kind and supportive.
+13. Participate actively in discussions.
+14. No impersonation of others.
+15. Respect intellectual property.
+16. No sharing of personal information.
+17. Follow the rules of the platform.
+18. No hate speech or discrimination.
+19. Be honest in your interactions.
+20. No cheating or dishonesty.
+21. Respect the moderators.
+22. No excessive self-promotion.
+23. Keep content appropriate for all ages.
+24. No sharing of explicit content.
+25. Use constructive criticism.
+26. No trolling or disruptive behavior.
+27. Be mindful of others' feelings.
+28. No sharing of malware or viruses.
+29. Follow the law and regulations.
+30. No solicitation of personal information.
+31. Respect the decisions of the staff.
+32. No creating multiple accounts.
+33. No sharing of account credentials.
+34. Be patient and understanding.
+35. No offensive usernames.
+36. No sharing of copyrighted material.
+37. No manipulation of votes or ratings.
+38. Be respectful in debates.
+39. No sharing of sensitive information.
+40. No impersonating staff members.
+41. No creating fake news.
+42. No sharing of harmful content.
+43. No engaging in illegal activities.
+44. No promoting violence or hate.
+45. Be a positive influence.
+46. No sharing of private messages.
+47. No engaging in personal attacks.
+48. No sharing of account hacks.
+49. No exploiting vulnerabilities.
+50. No sharing of personal grievances publicly.
+51. No creating fake accounts for malicious purposes.
+52. No engaging in phishing attempts.
+53. No sharing of confidential information.
+54. No engaging in cyberbullying.
+55. No promoting harmful substances.
+56. No sharing of explicit images.
+57. No engaging in hate groups.
+58. No sharing of extremist content.
+59. No promoting illegal downloads.
+60. No sharing of personal attacks.
+61. No engaging in doxxing.
+62. No sharing of unverified information.
+63. No creating misleading content.
+64. No engaging in harassment.
+65. No sharing of unauthorized content.
+66. No promoting scams or fraud.
+67. No engaging in disruptive behavior.
+68. No sharing of sensitive data without consent.
+69. No creating fake profiles.
+70. No engaging in identity theft.
+71. No sharing of harmful links.
+72. No promoting self-harm.
+73. No engaging in threats of violence.
+74. No sharing of inappropriate jokes.
+75. No engaging in public shaming.
+76. No sharing of personal conflicts publicly.
+77. No creating divisive content.
+78. No engaging in group harassment.
+79. No sharing of unverified claims.
+80. No promoting conspiracy theories.
+81. No engaging in manipulation of discussions.
+82. No sharing of harmful ideologies.
+83. No creating hostile environments.
+84. No engaging in exclusionary practices.
+85. No sharing of inflammatory content.
+86. No promoting divisive politics.
+87. No engaging in misinformation campaigns.
+88. No sharing of harmful stereotypes.
+89. No creating echo chambers.
+90. No engaging in censorship of others.
+91. No sharing of personal vendettas.
+92. No promoting unethical behavior.
+93. No engaging in backstabbing.
+94. No sharing of private conversations without consent.
+95. No creating toxic environments.
+96. No engaging in negative reinforcement.
+97. No sharing of harmful practices.
+98. No promoting unhealthy competition.
+99. No engaging in favoritism.
+100. No sharing of unverified testimonials.
+101. No creating barriers to entry.
+102. No engaging in gatekeeping behavior.
+103. No sharing of harmful advice.
+104. No promoting unrealistic expectations.
+105. No engaging in exclusionary language.
+106. No sharing of harmful myths.
+107. No creating unnecessary drama.
+108. No engaging in passive-aggressive behavior.
+109. No sharing of irrelevant content.
+110. No promoting divisive narratives.
+111. No engaging in harmful comparisons.
+112. No sharing of outdated information.
+113. No creating unnecessary conflicts.
+114. No engaging in negative labeling.
+115. No sharing of harmful assumptions.
+116. No promoting unhealthy relationships.
+117. No engaging in toxic positivity.
+118. No sharing of harmful trends.
+119. No creating unnecessary divisions.
+120. No engaging in harmful practices.
+                </textarea>
+            </div>
+            <button type="submit" id="submitButton" disabled>Sign up</button>
+        </form>
+        <div class="form-section">
+            <p>Have an account? <a href="/login">Log in</a></p>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('bubbleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const bubbles = [];
+
+        class Bubble {
+            constructor(x, y, radius) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.speed = Math.random() * 0.5 + 0.5; // Slower speed
+                this.direction = Math.random() < 0.5 ? 1 : -1; // Random direction
+            }
+
+            update() {
+                this.y += this.speed * this.direction;
+                if (this.y < -this.radius || this.y > canvas.height + this.radius) {
+                    this.y = Math.random() * canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = ' rgba(88, 199, 12, 0.7)'; // Green color
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createBubbles() {
+            for (let i = 0; i < 50; i++) {
+                const radius = Math.random() * 20 + 5; // Random radius
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                bubbles.push(new Bubble(x, y, radius));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bubbles.forEach(bubble => {
+                bubble.update();
+                bubble.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        createBubbles();
+        animate();
+
+        function toggleSubmitButton() {
+            const checkbox = document.getElementById('termsCheckbox');
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !checkbox.checked;
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const toggleButtons = document.querySelectorAll('.toggle-password');
+            toggleButtons.forEach(button => {
+                if (button.previousElementSibling.type === 'password') {
+                    button.previousElementSibling.type = 'text';
+                    button.textContent = 'Hide';
+                } else {
+                    button.previousElementSibling.type = 'password';
+                    button.textContent = 'Show';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

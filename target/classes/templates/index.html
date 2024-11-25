@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUET Club Management System</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: indianred;
+            color: black;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Button Styles */
+        .button {
+            --color: rgba(88, 101, 242, 1);
+            padding: 0.8em 1.7em;
+            background-color: transparent;
+            border-radius: .3em;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: .5s;
+            font-weight: 400;
+            font-size: 17px;
+            border: 1px solid;
+            font-family: inherit;
+            text-transform: uppercase;
+            color: var(--color);
+            z-index: 1;
+        }
+
+        .button::before, .button::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 50px;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            background-color: var(--color);
+            transition: 1s ease;
+        }
+
+        .button::before {
+            top: -1em;
+            left: -1em;
+        }
+
+        .button::after {
+            left: calc(100% + 1em);
+            top: calc(100% + 1em);
+        }
+
+        .button:hover::before, .button:hover::after {
+            height: 410px;
+            width: 410px;
+        }
+
+        .button:hover {
+            color: rgb(10, 25, 30);
+            color: #fff;
+        }
+
+        .button:active {
+            filter: brightness(.8);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar a {
+            color: white;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensure video is in the background */
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        #inspirational-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-top: 20px;
+            padding: 0 15px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Clubs Section */
+        .clubs {
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column; /* Align items vertically */
+            align-items: center; /* Center horizontally */
+        }
+
+        .clubs h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem; /* Larger font size */
+        }
+
+        .club {
+            display: flex;
+            flex-direction: column; /* Stack content vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center;
+            width: 80%; /* Increase width for better visibility */
+            max-width: 800px; /* Prevent the club from becoming too large */
+            background-color: antiquewhite;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px; /* Add padding for spacing */
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-height: 400px; /* Set a maximum height for the slideshow */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slides {
+            display: none;
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* Ensure images cover the container without overflow */
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .nav-button {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        .club-content {
+            padding: 20px;
+            text-align: center; /* Center text in club content */
+        }
+
+        .club-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem; /* Larger heading size */
+        }
+
+        .club-content p {
+            font-size: 1.1rem; /* Larger font for better readability */
+        }
+
+        /* Events Section */
+        .events {
+            background-color: hotpink;
+            padding: 50px 20px;
+        }
+
+        .events h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .event {
+            background-color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* News Section */
+        .news {
+            background-color: aquamarine;
+            padding: 50px 20px;
+        }
+
+        .news h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .news-card {
+            background-color: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: #007bff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            margin-bottom: 20px;
+        }
+
+        .testimonial {
+            background-color: white;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .social-link {
+            text-decoration: underline;
+            color: #007bff;
+        }
+
+        .social-link:hover {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>RUET Club Management</div>
+        <div>
+            <a href="#">Home</a> 
+            <a href="#clubs-section">Clubs</a> <!-- Link to clubs section -->
+            <a href="#events-section">Events</a> <!-- Link to events section -->
+            <a href="#news-section">News</a> <!-- Link to news section -->
+            <a href="#footer">Contact Us</a> <!-- Link to footer -->
+        </div>
+        <button class="button" onclick="window.location.href='/login'">Login / Sign Up</button>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <video autoplay muted loop id="background-video">
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h1>Welcome to RUET Club Management System</h1>
+        <p id="inspirational-text"></p>
+    </div>
+
+    <!-- Clubs Section -->
+    <div id="clubs-section" class="clubs">
+        <h2>Featured Clubs</h2>
+        <div class="club">
+            <div class="slideshow-container">
+                <img class="slides" src="img1.jpg" alt="Photographic Club">
+                <img class="slides" src="img2.jpg" alt="Photographic Club">
+                <img class="slides" src="img4.jpg" alt="Photographic Club">
+                <div class="navigation-buttons">
+                    <button class="nav-button" onclick="plusSlides(-1, this)">&#10094; Prev</button>
+                    <button class="nav-button" onclick="plusSlides(1, this)">Next &#10095;</button>
+                </div>
+            </div>
+            <div class="club-content">
+                <h3>Photographic Club</h3>
+                <p>Capturing the world one frame at a time. Join us to unleash your inner photographer.</p>
+                <button class="button" onclick="window.location.href='/login'">Explore</button>
+            </div>
+        </div>
+        
+        <div class="club">
+            <div class="slideshow-container">
+                <img class="slides" src="chess1.jpg" alt="Chess Club">
+                <img class="slides" src="chess2.jpg" alt="Chess Club">
+                <img class="slides" src="chess3.jpg" alt="Chess Club">
+                <div class="navigation-buttons">
+                    <button class="nav-button" onclick="plusSlides(-1, this)">&#10094; Prev</button>
+                    <button class="nav-button" onclick="plusSlides(1, this)">Next &#10095;</button>
+                </div>
+            </div>
+            <div class="club-content">
+                <h3>Chess Club</h3>
+                <p>Checkmate.</p>
+                <button class="button" onclick="window.location.href='/login'">Explore</button>
+            </div>
+        </div>
+        
+        <div class="club">
+            <div class="slideshow-container">
+                <img class="slides" src="cp1.jpg" alt="RAPL">
+                <img class="slides" src="cp2.jpg" alt="RAPL">
+                <img class="slides" src="cp3.jpg" alt="RAPL">
+                <div class="navigation-buttons">
+                    <button class="nav-button" onclick="plusSlides(-1, this)">&#10094; Prev</button>
+                    <button class="nav-button" onclick="plusSlides(1, this)">Next &#10095;</button>
+                </div>
+            </div>
+            <div class="club-content">
+                <h3>RAPL</h3>
+                <p>Code. Sleep. Repeat.</p>
+                <button class="button" onclick="window.location.href='/login'">Explore</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Section -->
+    <div id="events-section" class="events">
+        <h2>Upcoming Events</h2>
+        <div class="event">
+            <div><h3>Photography Contest - Dec 20, 2024</h3></div>
+            <button class="button">Register Now</button>
+        </div>
+        <div class="event">
+            <div><h3>Chess Tournament - Jan 10, 2025</h3></div>
+            <button class="button">Register Now</button>
+        </div>
+    </div>
+
+    <!-- News Section -->
+    <div id="news-section" class="news">
+        <h2>Latest News</h2>
+        <div class="news-card">
+            <h3>Club of the Month</h3>
+            <p>The Photographic Club has been awarded the Club of the Month!</p>
+        </div>
+        <div class="news-card">
+            <h3>Chess Club Victory</h3>
+            <p>The Chess Club won the National Tournament!</p>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <h2>What Our Members Say</h2>
+        <div class="testimonial">
+            "Joining the Coding Club changed my life!" - Alex
+        </div>
+        <div class="testimonial">
+            "The Chess Club is like a second family." - Jamie
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer" class="footer">
+        <p>© 2024 RUET Club Management. All Rights Reserved.</p>
+        <p>Follow us on:
+            <a href="https://www.facebook.com" target="_blank" class="social-link">Facebook</a> |
+            <a href="https://www.instagram.com" target="_blank" class="social-link">Instagram</a> |
+            <a href="https://www.twitter.com" target="_blank" class="social-link">Twitter</a>
+        </p>
+        <button class="button" onclick="window.location.href='/about'">About Us</button>
+    </div>
+
+    <!-- JavaScript for Slideshow Functionality -->
+    <script>
+        let autoSlideIntervals = []; // Array to hold intervals for each slideshow
+
+function showSlides(slideshow, slideIndex) {
+    const allSlides = slideshow.getElementsByClassName("slides");
+    for (let i = 0; i < allSlides.length; i++) {
+        allSlides[i].style.display = "none";  
+    }
+    if (slideIndex >= allSlides.length) { slideIndex = 0; } // Loop back to the first image
+    allSlides[slideIndex].style.display = "block";  
+    return slideIndex; // Return the current slide index
+}
+
+function plusSlides(n, button) {
+    const slideshow = button.closest('.slideshow-container');
+    const allSlides = slideshow.getElementsByClassName("slides");
+    let slideIndex = parseInt(slideshow.getAttribute('data-slide-index')) || 0; // Get current slide index
+
+    slideIndex += n;
+    if (slideIndex >= allSlides.length) { slideIndex = 0; } // Loop back to the first image
+    if (slideIndex < 0) { slideIndex = allSlides.length - 1; } // Go to the last image if previous is clicked
+
+    slideshow.setAttribute('data-slide-index', slideIndex); // Update the current slide index
+    showSlides(slideshow, slideIndex);
+    clearInterval(autoSlideIntervals[slideshow.dataset.index]); // Stop auto sliding for this slideshow
+}
+
+function startAutoSlide(slideshow, index) {
+    autoSlideIntervals[index] = setInterval(() => {
+        let slideIndex = parseInt(slideshow.getAttribute('data-slide-index')) || 0; // Get current slide index
+        slideIndex = showSlides(slideshow, slideIndex + 1); // Show next slide
+        slideshow.setAttribute('data-slide-index', slideIndex); // Update the current slide index
+    }, 3000); // Auto slide every 3 seconds
+}
+
+// Initialize the slideshow for each club
+const slideshows = document.querySelectorAll('.slideshow-container');
+slideshows.forEach((slideshow, index) => {
+    slideshow.setAttribute('data-slide-index', 0); // Initialize slide index
+    showSlides(slideshow, 0); // Show the first slide
+    startAutoSlide(slideshow, index); // Start auto sliding
+});
+
+        // Typewriting effect function
+        const inspirationalText = "RUET Club Management System is your gateway to unlocking endless possibilities. It connects students with diverse clubs, fostering creativity, leadership, and a sense of community. Whether you’re passionate about photography, coding, or chess, this platform is designed to help you discover, engage, and grow. Join us today and become part of something extraordinary!";
+        let i = 0;
+
+        function typeWriter() {
+            if (i < inspirationalText.length) {
+                document.getElementById("inspirational-text").innerHTML += inspirationalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Adjust speed here
+            }
+        }
+
+        typeWriter(); // Start typing effect when page loads
+    </script>
+</body>
+</html>

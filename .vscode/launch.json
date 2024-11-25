@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MedicalStoreApplication<ProductStore>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.ProductStore.MedicalStoreApplication",
+            "projectName": "ProductStore",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

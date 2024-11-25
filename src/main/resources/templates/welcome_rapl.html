@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Welcome to RAPL</title>
+    <style>
+        footer {
+            background: linear-gradient(to right, #ff6f00, #ff8f00);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: absolute;
+            width:700px;
+            top: 83%;
+            left: 25%;
+            border-radius: 20px;
+            font-family:monospace;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .social-media {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .social-media li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        .social-media a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .social-media a:hover {
+            text-decoration: underline;
+            color: #ffd54f;
+        }
+        .goBackButton {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            padding: 6px 6px;
+            font-size: 16px;
+            color: #fff;
+            background-color: transparent;
+            border: 2px solid #007bff;
+            border-radius: 10px; /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+        }
+        .goBackButton:hover {
+            background-color: red;
+            color: #fff;
+            border: 2px solid red;
+            transform: translateY(-2px);
+        } 
+    </style>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserSession();
+        });
+        
+        window.addEventListener('popstate', function(event) {
+            checkUserSession();
+        });
+    </script>
+</head>
+<body style="background-color:black">
+    <h1 style="background-color: antiquewhite;text-align: center; margin: 0px 15% 10px 15%;padding: 1% 1% 1% 1%;font-family:monospace;">Welcome to RAPL [ RUET Analytical Programming Lab ] <span th:text="${nickname}"></span>!</h1>
+   <div style="background-color: antiquewhite;text-align: center;margin: 0px 15% 0px 15%;padding: 1% 1% 1% 1%;font-family:monospace;font-size: 120%;" >
+     <h3>
+        We're thrilled to have you here! The Coding Community of RUET (RAPL) is dedicated to enhancing your coding skills and fostering collaboration on exciting projects. Whether you're a beginner or an experienced coder, you'll find valuable resources and support within our community.
+    </h3>
+     </div>
+    
+     <button class="goBackButton" onclick="goBack()" style="font-family:monospace;">Go Back</button>
+
+     <div style="position: absolute;height: 30%;width: 30%;top: 34%;left: 1%;text-align: left;background-color: navy;color: white;font-size:160%;font-family:monospace;overflow-y: scroll;padding: 5px 0 0 20px;">
+Alltime most problem solvers leaderboard: <br> <br>
+ 
+  1-> Novak <br>
+  2-> Horvath <br>
+  3-> Goosens <br>
+  4-> Sinclair <br>
+  5-> Faustinho <br>
+  6-> Sandberg <br>
+  7-> Tanaka <br>
+  8-> Sokolov <br>
+  9-> Bechet <br>
+ 10-> Eriksen 
+            
+    </div>
+
+    <div style="position: absolute;height: 30%;width: 30%;top: 34%;left: 33.667%;text-align:left;background-color: red;color: white;font-size:160%;font-family:monospace;overflow-y: scroll;padding: 5px 0 0 20px;">
+        
+Alltime most problem setters leaderboard: <br><br>
+ 
+    * Zimmer <br>
+    * Ramalho <br>
+    * Budak <br>
+    * Massali <br>
+    * Schmit <br>
+    * Wu <br>
+    * Roberts <br>
+    * Fernandez <br>
+    * Babangida <br>
+    * Kovalchuk
+            
+    </div>
+
+    <div style="position: absolute;background-color: antiquewhite;height: 30%;width: 30%;top: 34%;left: 66%;text-align: left;background-color: greenyellow;color: black;font-size:160%;font-family:monospace;overflow-y: scroll;padding: 5px 0 0 20px;">Notice Board:<br><br>
+    ** New intra RUET programming contest is coming soon.Book your spot , team up & go for glory as registration started from last Saturday. More details <a href="http://www.codeforces.com">here</a>.
+    </div>
+    <footer>
+        <h2>Follow Us</h2>
+        <ul class="social-media">
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+            <li><a href="https://messenger.com" target="_blank">Messenger</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Photographic Society</title>
+    <style>
+        .goBackButton {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            padding: 6px 6px;
+            font-size: 16px;
+            color: #fff;
+            background-color: black;
+            border: 2px solid #007bff;
+            border-radius: 10px; /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+        }
+        .goBackButton:hover {
+            background-color: white;
+            color: black;
+            border: 2px solid red;
+            transform: translateY(-2px);
+        } 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(to right, #ff6f00, #ff8f00);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+            color: #ffd54f;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .section {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .members-container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .member {
+            flex: 1;
+            min-width: 250px;
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .member h3 {
+            margin-top: 0;
+            color: #ff6f00;
+        }
+
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .photos img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .photos img:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .gallery-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .gallery-container img:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: linear-gradient(to right, #ff6f00, #ff8f00);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .social-media {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .social-media li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        .social-media a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .social-media a:hover {
+            text-decoration: underline;
+            color: #ffd54f;
+        }
+
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #contact-form label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #contact-form input, #contact-form textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #contact-form button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background-color: #ff6f00;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #contact-form button:hover {
+            background-color: #e65100;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RUET Photographic Society</h1>
+        <nav>
+            <a href="#members">Members</a>
+            <a href="#mission-vision">Mission & Vision</a>
+            <a href="#gallery">Gallery</a>
+            <!-- <a href="#contact">Contact</a> -->
+        </nav>
+    </header>
+    <main>
+        <button class="goBackButton" onclick="goBack()" style="font-family:monospace;">Go Back</button>
+        <section id="members" class="section">
+            <h2>Our Top Members</h2>
+            <div class="members-container">
+                <div class="member">
+                    <h3>Rakibul Hasan Durjoy</h3>
+                    <p>Department of CSE</p>
+                    <div class="photos">
+                        <img src="https://images.unsplash.com/photo-1725538031920-1505c79bbb8d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D" alt="Jane's Photo 1">
+                        <img src="https://images.unsplash.com/photo-1725044340889-2939147a9c8e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8NnNNVmpUTFNrZVF8fGVufDB8fHx8fA%3D%3D" alt="Jane's Photo 2">
+                        <img src="https://images.unsplash.com/photo-1725468697616-e35f25d5b0c4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMXx8fGVufDB8fHx8fA%3D%3D" alt="Jane's Photo 3">
+                    </div>
+                </div>
+                <div class="member">
+                    <h3>Shahriar Durjoy</h3>
+                    <p>Department of CSE</p>
+                    <div class="photos">
+                        <img src="https://images.unsplash.com/photo-1725133306731-fd82b613300f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8" alt="John's Photo 1">
+                        <img src="https://images.unsplash.com/photo-1635884535535-248c15ce463d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fHw%3D" alt="John's Photo 2">
+                        <img src="https://plus.unsplash.com/premium_photo-1695653755662-0b7b9f84e5e2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDIwfHx8ZW58MHx8fHx8" alt="John's Photo 3">
+                    </div>
+                </div>
+                
+                <!-- Add more members as needed -->
+            </div>
+        </section>
+
+        <section id="mission-vision" class="section">
+            <h2>Mission & Vision</h2>
+            <p><strong>Mission:</strong> To capture and celebrate the beauty of our university and its community through the art of photography.</p>
+            <p><strong>Vision:</strong> To inspire creativity and provide a platform for talented photographers to showcase their work and connect with others.</p>
+        </section>
+
+        <section id="gallery" class="section">
+            <h2>Recent Gallery</h2>
+            <div id="gallery-container" class="gallery-container">
+                <!-- Dynamic gallery items will be added here -->
+            </div>
+        </section>
+
+        <!-- <section id="contact" class="section">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+
+                <button type="submit">Send</button>
+            </form>
+        </section> -->
+    </main>
+
+    <footer>
+        <h2>Follow Us</h2>
+        <ul class="social-media">
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+            <li><a href="https://messenger.com" target="_blank">Messenger</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryContainer = document.getElementById('gallery-container');
+
+            // Sample photos for the gallery
+            const galleryPhotos = [
+                'https://images.unsplash.com/photo-1725067807370-a3fc3fd23000?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI5fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D',
+                'https://images.unsplash.com/photo-1725053181330-f155be9cf97f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM3fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D',
+                'https://images.unsplash.com/photo-1724437208915-775c9638d8de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDYwfHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D',
+                'https://images.unsplash.com/photo-1725353568639-1dbd293ad82e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D',
+                'https://images.unsplash.com/photo-1725113940491-9ede3a53eafd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D','https://images.unsplash.com/photo-1506223213794-a78f522c26f3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D','https://images.unsplash.com/photo-1536415674649-19c6de404a9a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D','https://images.unsplash.com/photo-1725049102056-19ff72948e33?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE0fEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D','https://images.unsplash.com/photo-1725394737339-b52dd1f80d4b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE2fEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D','https://images.unsplash.com/photo-1725053773231-4f4353debe07?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM0fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D','https://images.unsplash.com/photo-1725053144690-6a6cf6053e70?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM3fHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D','https://images.unsplash.com/photo-1724920007182-6b0d37143915?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQyfHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D'
+            ];
+
+            // Function to create a gallery item
+            function createGalleryItem(src) {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Gallery Photo';
+                img.classList.add('gallery-item');
+                return img;
+            }
+
+            // Add photos to the gallery container
+            galleryPhotos.forEach(photo => {
+                galleryContainer.appendChild(createGalleryItem(photo));
+            });
+
+            // Handle form submission
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert('Your message has been sent!');
+                contactForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
