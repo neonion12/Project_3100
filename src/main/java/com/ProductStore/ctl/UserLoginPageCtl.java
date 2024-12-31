@@ -1,5 +1,6 @@
 package com.ProductStore.ctl;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,34 +36,47 @@ public class UserLoginPageCtl {
         return "/about_us";
     }
 
-     @PostMapping("/loginUser")
- public String loginUser(@RequestParam("email") String email,
-                         @RequestParam("password") String password,
-                         Model model, HttpSession session) {
-     Users user = userRepository.findByEmailAndPassword(email, password);
-     if (user != null) {
-         // User authenticated
-         Long id = user.getId();
-         String nickname = user.getNickname();
-         String role = user.getRole(); // Fetch the role
-         int roll = user.getRoll();
-         int series = user.getSeries();
-         String department = user.getDepartment();
-         String gender = user.getGender();
-         session.setAttribute("id", id);
-         session.setAttribute("nickname", nickname);
-         session.setAttribute("role", role); // Save role in session
-         session.setAttribute("roll", roll);
-         session.setAttribute("series", series);
-         session.setAttribute("department", department);
-         session.setAttribute("gender", gender);
-         return "redirect:/welcome"; // Redirect to welcome page
-     } else {
-         // Authentication failed
-         model.addAttribute("error", "Invalid email or password.");
-         return "login";
-     }
-}
+    @PostMapping("/loginUser")
+    public String loginUser (@RequestParam("email") String email,
+                            @RequestParam("password") String password,
+                            Model model, HttpSession session) {
+        // Fetch the user by email
+        Users user = userRepository.findByEmail(email);
+        
+        // Check if user exists and verify the password
+        if (user != null) {
+            // User exists, now check the password
+            if (BCrypt.checkpw(password, user.getPassword())) {
+                // User authenticated
+                Long id = user.getId();
+                String nickname = user.getNickname();
+                String role = user.getRole(); // Fetch the role
+                int roll = user.getRoll();
+                int series = user.getSeries();
+                String department = user.getDepartment();
+                String gender = user.getGender();
+                
+                // Set user details in session
+                session.setAttribute("id", id);
+                session.setAttribute("nickname", nickname);
+                session.setAttribute("role", role); // Save role in session
+                session.setAttribute("roll", roll);
+                session.setAttribute("series", series);
+                session.setAttribute("department", department);
+                session.setAttribute("gender", gender);
+                
+                return "redirect:/welcome"; // Redirect to welcome page
+            } else {
+                // Password does not match
+                model.addAttribute("error", "Invalid email or password.");
+                return "login"; // Return to login page
+            }
+        } else {
+            // User not found
+            model.addAttribute("error", "Invalid email or password.");
+            return "login"; // Return to login page
+        }
+    }
 
 
 @GetMapping("/welcome")

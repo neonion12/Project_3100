@@ -9,11 +9,11 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: #f5f7fa; /* Light background */
-            color: #333;
+            background: #1a1a1a; /* Dark background */
+            color: #ffffff; /* White text */
         }
         header {
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            background: linear-gradient(45deg, #1a1a1a, #00f2fe);
             color: white;
             padding: 30px;
             text-align: center;
@@ -37,7 +37,7 @@
             margin: 0 auto;
         }
         .sidebar {
-            background: #ffffff;
+            background: #2c2c2c; /* Dark sidebar */
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -56,7 +56,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #444; /* Darker border */
         }
         .profile-item:last-child {
             border-bottom: none;
@@ -66,7 +66,7 @@
             color: #4facfe;
         }
         .content {
-            background: #ffffff;
+            background: #2c2c2c; /* Dark content area */
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -82,17 +82,17 @@
             gap: 20px;
         }
         .club-card {
-            background: #ffffff;
+            background:mediumvioletred; /* Red background for club cards */
             border: 1px solid #ddd;
             border-radius: 10px;
             padding: 20px;
             width: calc(33.333% - 20px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: background 0.3s, color 0.3s; /* Smooth transition */
         }
         .club-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background:tomato; /* Change to white on hover */
+            color: black; /* Change text color to black on hover */
         }
         .club-card h3 {
             margin: 0 0 10px;
@@ -101,7 +101,7 @@
         }
         .club-card p {
             margin: 5px 0;
-            color: #555;
+            color: #ddd; /* Lighter text color */
         }
         .buttons {
             margin-top: 20px;
@@ -127,7 +127,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .logout:hover {
+ .logout:hover {
             background: #d93636;
         }
     </style>

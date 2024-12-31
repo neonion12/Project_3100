@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.ProductStore.entity.Users;
 import com.ProductStore.repository.UserRepository;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Controller
 public class UserRegPageCtl {
@@ -41,6 +42,10 @@ public class UserRegPageCtl {
             model.addAttribute("error", "Passwords do not match.");
             return "userRegistration";
         }
+ // Encrypt the password using BCrypt
+ String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+ user.setPassword(hashedPassword); // Set the hashed password back to the user object
+ user.setConfirmPassword(hashedPassword);
         userRepository.save(user);
         return "redirect:/login";
         // userRepository.save(user);
