@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Club Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input, button, select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>User Club Management System</h1>
+</header>
+
+<div class="container">
+    <!-- View User Details -->
+    <div class="form-group">
+        <label for="userId">Enter User ID:</label>
+        <input type="number" id="userId" placeholder="User ID">
+        <button onclick="getUserDetails()">Get User Details</button>
+    </div>
+    <div id="userDetails" class="result"></div>
+
+    <!-- View Clubs Joined by User -->
+    <div class="form-group">
+        <label for="userClubsId">Enter User ID to View Clubs:</label>
+        <input type="number" id="userClubsId" placeholder="User ID">
+        <button onclick="getUserClubs()">Get User's Clubs</button>
+    </div>
+    <div id="userClubs" class="result"></div>
+
+    <!-- Join a Club -->
+    <div class="form-group">
+        <label for="joinUserId">User ID:</label>
+        <input type="number" id="joinUserId" placeholder="User ID">
+        <label for="joinClubId">Club ID:</label>
+        <input type="number" id="joinClubId" placeholder="Club ID">
+        <button onclick="joinClub()">Join Club</button>
+    </div>
+    <div id="joinResult" class="result"></div>
+
+    <!-- View Club Members -->
+    <div class="form-group">
+        <label for="clubId">Enter Club ID to View Members:</label>
+        <input type="number" id="clubId" placeholder="Club ID">
+        <button onclick="getClubMembers()">Get Club Members</button>
+    </div>
+    <div id="clubMembers" class="result"></div>
+</div>
+
+<script>
+    const baseUrl = 'http://localhost:8080'; // Replace with your Spring Boot backend URL
+
+    // Fetch User Details
+    function getUserDetails() {
+        const userId = document.getElementById('userId').value;
+        fetch(`${baseUrl}/users/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('userDetails').innerHTML = `
+                    <h3>User Details</h3>
+                    <p><strong>Nickname:</strong> ${data.nickname}</p>
+                    <p><strong>Series:</strong> ${data.series}</p>
+                    <p><strong>Department:</strong> ${data.department}</p>
+                    <p><strong>Email:</strong> ${data.email}</p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('userDetails').innerHTML = `<p style="color: red;">User not found.</p>`;
+            });
+    }
+
+    // Fetch User's Clubs
+    function getUserClubs() {
+        const userId = document.getElementById('userClubsId').value;
+        fetch(`${baseUrl}/users/${userId}/clubs`)
+            .then(response => response.json())
+            .then(data => {
+                let clubs = '<h3>Clubs Joined:</h3>';
+                data.forEach(club => {
+                    clubs += `<p><strong>${club.name}</strong> - ${club.description}</p>`;
+                });
+                document.getElementById('userClubs').innerHTML = clubs;
+            })
+            .catch(error => {
+                document.getElementById('userClubs').innerHTML = `<p style="color: red;">No clubs found for this user.</p>`;
+            });
+    }
+
+    // Join a Club
+    function joinClub() {
+        const userId = document.getElementById('joinUserId').value;
+        const clubId = document.getElementById('joinClubId').value;
+
+        fetch(`${baseUrl}/users/${userId}/join/${clubId}`, { method: 'POST' })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('joinResult').innerHTML = `<p style="color: green;">Successfully joined the club!</p>`;
+                } else {
+                    document.getElementById('joinResult').innerHTML = `<p style="color: red;">Failed to join the club.</p>`;
+                }
+            })
+            .catch(error => {
+                document.getElementById('joinResult').innerHTML = `<p style="color: red;">Error occurred while joining the club.</p>`;
+            });
+    }
+
+    // Fetch Club Members
+    function getClubMembers() {
+        const clubId = document.getElementById('clubId').value;
+        fetch(`${baseUrl}/users/club/${clubId}/members`)
+            .then(response => response.json())
+            .then(data => {
+                let members = '<h3>Club Members:</h3>';
+                data.forEach(member => {
+                    members += `<p><strong>${member.nickname}</strong> - ${member.email}</p>`;
+                });
+                document.getElementById('clubMembers').innerHTML = members;
+            })
+            .catch(error => {
+                document.getElementById('clubMembers').innerHTML = `<p style="color: red;">No members found for this club.</p>`;
+            });
+    }
+</script>
+
+</body>
+</html>

@@ -1,10 +1,18 @@
 package com.ProductStore.entity;
 
+import java.util.Set;
+import java.util.HashSet;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -14,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
-public class UserEntity {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +52,23 @@ public class UserEntity {
     @Column(name = "gender", nullable = false)
     private String gender;
 
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(
+        name = "user_club_mapping", // Join table name
+        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, // Foreign key for UserEntity
+        inverseJoinColumns = {@JoinColumn(name = "club_id", referencedColumnName = "id")}// Foreign key for ClubEntity
+    )
+    private Set<Clubs> clubs = new HashSet<>();
+
     // Default constructor
-    public UserEntity() {
+    public Users() {
     }
 
     // Parameterized constructor
-    public UserEntity(String nickname, int series, String department, int roll, String email, String password, String confirmPassword, String gender) {
+    public Users(String nickname, int series, String department, int roll, String email, String password, String confirmPassword, String gender) {
         this.nickname = nickname;
         this.series = series;
         this.department = department;
@@ -58,6 +77,7 @@ public class UserEntity {
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.gender = gender;
+        this.role = role;
     }
 
     // Getters and setters
@@ -133,10 +153,19 @@ public class UserEntity {
         this.gender = gender;
     }
 
+    
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
-        return "UserEntity [id=" + id + ", nickname=" + nickname + ", series=" + series + ", department=" + department
+        return "Users [id=" + id + ", nickname=" + nickname + ", series=" + series + ", department=" + department
                 + ", roll=" + roll + ", email=" + email + ", password=" + password + ", confirmPassword=" + confirmPassword
-                + ", gender=" + gender + "]";
+                + ", gender=" + gender + ", role=" + role + "]";
     }
 }

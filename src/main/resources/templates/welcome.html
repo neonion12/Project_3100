@@ -2,152 +2,209 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            background: #f5f7fa; /* Light background */
+            color: #333;
+        }
+        header {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .sidebar {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .sidebar h2 {
+            font-size: 1.5em;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+        .profile-info {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            background: url('img3.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            height: 100vh;
+            gap: 10px;
         }
-        h1 {
-            margin-top: 20px;
-            font-size: 36px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
         }
-        .club-container {
-            width: 80%;
-            margin: 20px 0;
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+        .profile-item span {
+            font-weight: bold;
+            color: #4facfe;
+        }
+        .content {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .content h2 {
+            font-size: 1.8em;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+        .clubs-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            gap: 20px;
         }
-        .club-box {
-            width: 30%; /* Adjust width as needed */
-            padding: 20px;
-            margin: 20px 0;
-            background-color: rgba(0, 123, 255, 0.8);
-            color: #fff;
+        .club-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            text-align: center;
+            padding: 20px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .club-box:hover {
-            background-color: rgba(221, 21, 21, 0.8);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-            transform: translateY(-10px);
+        .club-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        .club-box h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
+        .club-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+            color: #4facfe; /* Club name color */
         }
-        .club-box p {
-            font-size: 16px;
-            line-height: 1.6;
+        .club-card p {
+            margin: 5px 0;
+            color: #555;
         }
-        .button-container {
-            margin-top: 15px;
+        .buttons {
+            margin-top: 20px;
         }
-        .get-in-button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            margin: 5px;
-        }
-        .get-in-button:hover {
-            opacity: 0.9;
-        }
-        .button1 {
-            background-color: #FF5733; /* Color for the first button */
-        }
-        .button2 {
-            background-color: black; /* Color for the second button */
-        }
-        .button3 {
-            background-color:deeppink; /* Color for the third button */
-        }
-        .logout-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #d72638;
-            color: #fff;
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            color: white;
+            background: #4facfe;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s;
         }
-        .logout-button:hover {
-            background-color: #d8cccd;
-            color: red;
+        button:hover {
+            background: #0056b3;
+        }
+        .logout {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout:hover {
+            background: #d93636;
         }
     </style>
-    <script>
-        function logout() {
-            fetch('/logout', { method: 'POST' })
-                .then(response => {
-                    if (response.ok) {
-                        sessionStorage.setItem('isLoggedIn', 'false');
-                        window.location.href = '/login';
-                    }
-                });
-        }
-
-        function checkUserSession() {
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            if (isLoggedIn !== 'true') {
-                window.location.href = '/login';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            checkUserSession();
-        });
-
-        window.addEventListener('popstate', function(event) {
-            checkUserSession();
-        });
-    </script>
 </head>
 <body>
-    <h1>Welcome, <span th:text="${nickname}"></span>!</h1>
-    <button class="logout-button" onclick="logout()">Logout</button>
-    <div class="club-container">
-        <div class="club-box">
-            <h2>Chess Club of RUET</h2>
-            <p>Join the chess club to improve your strategic thinking and meet fellow enthusiasts.</p>
-            <div class="button-container">
-                <button class="get-in-button button1" onclick="window.location.href='/welcome_chess'">GET IN</button>
+
+    <header>
+        <h1>Welcome, <span th:text="${nickname}"></span>!</h1>
+        <p>Your personalized dashboard</p>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Your Profile</h2>
+            <div class="profile-info">
+                <div class="profile-item">
+                    <p>Role:</p>
+                    <span th:text="${role}"></span>
+                </div>
+                <div class="profile-item">
+                    <p>Nickname:</p>
+                    <span th:text="${nickname}"></span>
+                </div>
+                <div class="profile-item">
+                    <p>Series:</p>
+                    <span th:text="${series}"></span>
+                </div>
+                <div class="profile-item">
+                    <p>Roll:</p>
+                    <span th:text="${roll}"></span>
+                </div>
+                <div class="profile-item">
+                    <p>Department:</p>
+                    <span th:text="${department}"></span>
+                </div>
+                <div class="profile-item">
+                    <p>Gender:</p>
+                    <span th:text="${gender}"></span>
+                </div>
             </div>
         </div>
-        <div class="club-box">
-            <h2>Photographic Club of RUET</h2>
-            <p>Capture moments and express your creativity with our photography club.</p>
-            <div class="button-container">
-                <button class="get-in-button button2" onclick="window.location.href='/welcome_photo'">GET IN</button>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h2>All Clubs</h2>
+            <div class="clubs-list">
+                <div th:each="club : ${allClubs}" class="club-card">
+                    <h3 th:text="${club.name}"></h3>
+                    <p><strong>Motto:</strong> <span th:text="${club.motto}"></span></p>
+                    <p><strong>Mission:</strong> <span th:text="${club.mission}"></span></p>
+                    <div class="buttons">
+                        <button th:attr="onclick='window.location.href=\'/view-club/' + ${club.name} + '\' '">Get In</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="club-box">
-            <h2>Coding Community of RUET (RAPL)</h2>
-            <p>Enhance your coding skills and collaborate on exciting projects with our coding community.</p>
-            <div class="button-container">
-                <button class="get-in-button button3" onclick="window.location.href='/welcome_rapl'">GET IN</button>
+
+            <h2>Your Clubs</h2>
+            <div class="clubs-list">
+                <div th:each="club : ${adminClubs}" class="club-card">
+                    <h3 th:text="${club.name}"></h3>
+                    <p><strong>Motto:</strong> <span th:text="${club.motto}"></span></p>
+                    <p><strong>Mission:</strong> <span th:text="${club.mission}"></span></p>
+                    <div class="buttons">
+                        <button th:attr="onclick='window.location.href=\'/view-club/' + ${club.name} + '\' '">Get In</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <div th:if="${role == 'ADMIN'}">
+                    <button onclick="location.href='/clubs/new'">Create a Club</button>
+                    <button th:attr="onclick='location.href=\'/admin/' + ${id} + '\' '">Go to Admin</button>
+                </div>
+                <form action="/logout" method="post" style="display:inline;">
+                    <button type="submit" class="logout">Logout</button>
+                </form>
             </div>
         </div>
     </div>

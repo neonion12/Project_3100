@@ -2,199 +2,250 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <style>
+        /* General styles */
         body {
             font-family: Arial, sans-serif;
-            margin: 10;
-            padding: 0;
+            margin: 0;
+            background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: scroll;
-            background-color: white;
-            position: relative;
+            overflow: hidden; /* Prevent scrolling */
         }
-        .container {
-            text-align: center;
-            padding: 50px;
-            background-color: rgba(255, 255, 255, 0.8); /* Make the form semi-transparent */
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            z-index: 1;
-            position: relative;
-        }
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        label {
-            text-align: left;
-            padding-right: 10px;
-            font-weight: bold;
-        }
-        input, select, textarea {
+
+        #bubbleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 7px;
-            border-radius: 5px;
+            height: 100%;
+            z-index: -1; /* Push the canvas behind other elements */
+            pointer-events: none; /* Prevent the canvas from interfering with clicks */
+        }
+
+        .form-box {
+            max-width: 500px; /* Adjust width */
+            max-height: 100vh; /* Reduce height */
+            background: rgba(241, 247, 254, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: #010101;
+            padding: 15px; /* Reduce padding */
+        }
+
+        #registrationForm {
+            position: relative;
+            z-index: 1; /* Ensure it's above the canvas */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Reduce gap */
+            text-align: center;
+        }
+
+        /* Form text */
+        .form-title {
+            font-weight: bold;
+            font-size: 1.5rem; /* Reduce title size */
+            margin-bottom: 4px; /* Reduce margin */
+        }
+
+        .form-subtitle {
+            font-size: 0.8rem; /* Reduce subtitle size */
+            color: #666;
+            margin-bottom: 8px; /* Reduce margin */
+        }
+
+        /* Input styling */
+        input, select, textarea {
+            background: none;
+            border: 0;
+            outline: 0;
+            height: 35px; /* Reduce height */
+            width: 100%;
+            border-bottom: 1px solid #eee;
+            font-size: 0.85rem; /* Reduce font size */
+            padding: 5px 10px; /* Reduce padding */
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-bottom: 1px solid #0066ff;
+        }
+
+        /* Terms section */
+        .terms-container {
+            display: flex;
+            align-items: center;
+            margin-top: 5px; /* Reduce margin */
+        }
+
+        .terms-container input[type="checkbox"] {
+            margin-right: 5px; /* Reduce margin */
+        }
+
+        textarea {
+            height: 80px; /* Reduce height */
             border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        button {
-            grid-column: span 2;
-            padding: 15px 30px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
             border-radius: 5px;
+            padding: 5px; /* Reduce padding */
+            resize: none;
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 0.75rem; /* Reduce font size */
+            overflow-y: auto;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #0066ff;
+            color: white;
+            border: 0;
+            border-radius: 24px;
+            padding: 8px 12px; /* Reduce padding */
+            font-size: 0.9rem; /* Reduce font size */
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
+            transition: background-color .3s ease;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #005ce6;
         }
+
         button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
         }
-        .terms-container {
-            grid-column: span 2;
+
+        /* Styles for side-by-side nickname and series */
+        .input-group {
             display: flex;
-            align-items:center;
-            text-align:left;
+            justify-content: space-between;
+            gap: 5px; /* Space between the inputs */
         }
-        .terms-container input[type="checkbox"] {
-            
-            display: flex;
-            
-        }
-        .terms-container label {
-            display: flex;
-            align-items: center;
-            
-        }
-        .terms-container textarea {
-            grid-column: span 2;
-            height: 50px; /* Reduce the height of the textarea */
-            resize: none;
-            flex-grow: 1;
-            text-align: left;
-            
-        }
-        .line {
-            position: absolute;
-            height: 5px;
-            width: 100%;
-            top: 0;
-            left: -100%;
-            animation: move 5s linear infinite;
-        }
-        @keyframes move {
-            0% { left: -100%; }
-            100% { left: 100%; }
+
+        .input-group input {
+            flex: 1; /* Make inputs share the space equally */
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h2>Registration Form</h2>
-    <form action="/saveUser" method="post">
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname" required>
-        
-        <label for="series">Series:</label>
-        <input type="number" id="series" name="series" required>
-        
-        <label for="department">Department:</label>
-        <select id="department" name="department" required>
-            <option value="CSE">CSE</option>
-            <option value="EEE">EEE</option>
-            <option value="CE">CE</option>
-            <option value="ME">ME</option>
-            <option value="ECE">ECE</option>
-            <option value="ETE">ETE</option>
-            <option value="ChE">ChE</option>
-            <option value="BECM">BECM</option>
-            <option value="IPE">IPE</option>
-            <option value="Architecture">Architecture</option>
-        </select>
-        
-        <label for="roll">Roll No:</label>
-        <input type="number" id="roll" name="roll" required>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
-        
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select>
-        <div class="terms-container">
-            <input type="checkbox" id="termsCheckbox" onchange="toggleSubmitButton()">
-            <label for="termsCheckbox" style="background-color: antiquewhite; border-radius: 5px;
-            cursor: pointer; padding-right: 20px; padding-left: 20px;"> I agree with the Terms & Policies </label>   
+    <canvas id="bubbleCanvas"></canvas>
+    <div class="form-box">
+        <h2 class="form-title">Registration Form</h2>
+        <span class="form-subtitle">Fill in your details below.</span>
+        <form id="registrationForm" action="/saveUser " method="post">
+            <div class="input-group">
+                <input type="text" id="nickname" name="nickname" placeholder="Nickname" required>
+                <input type="number" id="series" name="series" placeholder="Series" required>
+            </div>
+            <select id="department" name="department" required>
+                <option value="" disabled selected>Select Department</option>
+                <option value="CSE">CSE</option>
+                <option value="EEE">EEE</option>
+                <option value="CE">CE</option>
+                <option value="ME">ME</option>
+                <option value="ECE">ECE</option>
+                <option value="ETE">ETE</option>
+                <option value="ChE">ChE</option>
+                <option value="BECM">BECM</option>
+                <option value="IPE">IPE</option>
+                <option value="Architecture">Architecture</option>
+            </select>
+            <input type="number" id="roll" name="roll" placeholder="Roll No" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <select id="role" name="role" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
+            </select>
+            <div class="terms-container">
+                <input type="checkbox" id="termsCheckbox" onchange="toggleSubmitButton()">
+                <label for="termsCheckbox">I agree with the Terms & Policies</label>
+            </div>
             <textarea readonly>
 1. We don't share your data.
 2. No bullying in clubs.
 3. No fighting in clubs.
             </textarea>
-        </div>
-        
-        
-        
-        <button type="submit" id="submitButton" disabled>Register</button>
-    </form>
-</div>
-
-<script>
-    function toggleSubmitButton() {
-        const checkbox = document.getElementById('termsCheckbox');
-        const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = !checkbox.checked;
-    }
-
-    function createLines() {
-        for (let i = 0; i < 20; i++) {
-            const line = document.createElement('div');
-            line.className = 'line';
-            line.style.backgroundColor = getRandomColor();
-            line.style.top = `${i * 5}%`;
-            line.style.animationDelay = `${Math.random() * 5}s`; /* Add random delay for variety */
-            document.body.appendChild(line);
+            <button type="submit" id="submitButton" disabled>Register</button>
+        </form>
+    </div>
+    <script>
+        function toggleSubmitButton() {
+            const checkbox = document.getElementById('termsCheckbox');
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !checkbox.checked;
         }
-    }
 
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+        const canvas = document.getElementById('bubbleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Bubble {
+            constructor(x, y, radius) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.speed = Math.random() * 0.5 + 0.5; // Random speed
+                this.direction = Math.random() < 0.5 ? 1 : -1; // Random direction
+            }
+
+            update() {
+                this.y += this.speed * this.direction;
+                if (this.y < -this.radius || this.y > canvas.height + this.radius) {
+                    this.y = Math.random() * canvas.height; // Reset position
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(88, 199, 12, 0.7)';
+                ctx.fill();
+                ctx.closePath();
+            }
         }
-        return color;
-    }
 
-    createLines();
+        const bubbles = [];
+        for (let i = 0; i < 100; i++) {
+            bubbles.push(new Bubble(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 20 + 5 // Random size (radius)
+            ));
+        }
 
-    setInterval(() => {
-        document.querySelectorAll('.line').forEach(line => {
-            line.style.backgroundColor = getRandomColor();
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            bubbles.forEach(bubble => {
+                bubble.update(); // Update bubble position
+                bubble.draw();   // Draw the bubble
+            });
+            requestAnimationFrame(animate); // Repeat animation
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
-    }, 5000);
-</script>
-
+    </script>
 </body>
 </html>

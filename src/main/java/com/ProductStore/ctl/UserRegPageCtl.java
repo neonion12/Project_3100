@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.ProductStore.entity.UserEntity;
+import com.ProductStore.entity.Users;
 import com.ProductStore.repository.UserRepository;
 
 @Controller
@@ -32,7 +32,7 @@ public class UserRegPageCtl {
     }
     
     @PostMapping("/saveUser")
-    public String saveUser(HttpServletRequest request, @ModelAttribute("form") UserEntity user, Model model) {
+    public String saveUser(HttpServletRequest request, @ModelAttribute("form") Users user, Model model) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             model.addAttribute("error", "Email already exists.");
             return "userRegistration";
