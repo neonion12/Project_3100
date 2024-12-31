@@ -36,28 +36,29 @@ public class ClubService {
         return clubRepository.findByAdminIdd(adminIdd);
     }
 
-    // // Update a club
-    // public Clubs updateClub(Long clubId, Clubs updatedClub) {
-    //     Optional<Clubs> existingClub = clubRepository.findById(clubId);
-    //     if (existingClub.isPresent()) {
-    //         Clubs club = existingClub.get();
-    //         club.setName(updatedClub.getName());
-    //         club.setMotto(updatedClub.getMotto());
-    //         club.setMission(updatedClub.getMission());
-    //         club.setPresidentName(updatedClub.getPresidentName());
-    //         club.setPresidentFacebook(updatedClub.getPresidentFacebook());
-    //         club.setPresidentInstagram(updatedClub.getPresidentInstagram());
-    //         club.setPresidentEmail(updatedClub.getPresidentEmail());
-    //         club.setVicePresidentName(updatedClub.getVicePresidentName());
-    //         club.setVicePresidentFacebook(updatedClub.getVicePresidentFacebook());
-    //         club.setVicePresidentInstagram(updatedClub.getVicePresidentInstagram());
-    //         club.setVicePresidentEmail(updatedClub.getVicePresidentEmail());
-    //         club.setEventLink(updatedClub.getEventLink());
-    //         return clubRepository.save(club);
-    //     }
-    //     return null; // or throw an exception
-    // }
-
+    // Update a club
+    public Clubs updateClub(Long clubId, Clubs updatedClub) {
+        Optional<Clubs> existingClubOpt = clubRepository.findById(clubId);
+        if (existingClubOpt.isPresent()) {
+            Clubs existingClub = existingClubOpt.get();
+            // Update the fields
+            existingClub.setName(updatedClub.getName());
+            existingClub.setMotto(updatedClub.getMotto());
+            existingClub.setMission(updatedClub.getMission());
+            existingClub.setPresidentName(updatedClub.getPresidentName());
+            existingClub.setPresidentFacebook(updatedClub.getPresidentFacebook());
+            existingClub.setPresidentInstagram(updatedClub.getPresidentInstagram());
+            existingClub.setPresidentEmail(updatedClub.getPresidentEmail());
+            existingClub.setVicePresidentName(updatedClub.getVicePresidentName());
+            existingClub.setVicePresidentFacebook(updatedClub.getVicePresidentFacebook());
+            existingClub.setVicePresidentInstagram(updatedClub.getVicePresidentInstagram());
+            existingClub.setVicePresidentEmail(updatedClub.getVicePresidentEmail());
+            existingClub.setEventLink(updatedClub.getEventLink());
+            
+            return clubRepository.save(existingClub); // Save the updated club
+        }
+        return null; // Return null if club not found
+    }
     // // Delete a club
     // public void deleteClub(Long clubId) {
     //     clubRepository.deleteById(clubId);

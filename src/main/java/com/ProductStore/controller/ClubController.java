@@ -13,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ClubController {
@@ -32,17 +34,51 @@ public class ClubController {
         return ResponseEntity.ok(clubs);
     }
 
-    // // Update a club
-    // @PutMapping("/{clubId}")
-    // public ResponseEntity<Clubs> updateClub(@PathVariable Long clubId, @RequestBody Clubs updatedClub) {
-    //     Clubs club = clubService.updateClub(clubId, updatedClub);
-    //     if (club != null) {
-    //         return ResponseEntity.ok(club);
-    //     }
-    //     return ResponseEntity.notFound().build(); // Return 404 if club not found
-    // }
+    @GetMapping("/edit-club/{clubName}")
+    public String editClub(@PathVariable String clubName, Model model, HttpSession session) {
+        // Retrieve the Admin ID from the session
+        Clubs club = clubService.findByName(clubName);
+        model.addAttribute("club", club);
+        if (club != null) {
+            // Add club attributes to the model
+            model.addAttribute("clubId", club.getId());
+            model.addAttribute("clubName", club.getName());
+            model.addAttribute("motto", club.getMotto());
+            model.addAttribute("mission", club.getMission());
+            model.addAttribute("presidentName", club.getPresidentName());
+            model.addAttribute("presidentFacebook", club.getPresidentFacebook());
+            model.addAttribute("presidentInstagram", club.getPresidentInstagram());
+            model.addAttribute("presidentEmail", club.getPresidentEmail());
+            model.addAttribute("vicePresidentName", club.getVicePresidentName());
+            model.addAttribute("vicePresidentFacebook", club.getVicePresidentFacebook());
+            model.addAttribute("vicePresidentInstagram", club.getVicePresidentInstagram());
+            model.addAttribute("vicePresidentEmail", club.getVicePresidentEmail());
+            model.addAttribute("eventLink", club.getEventLink());
+        } else {
+            // Handle the case where the club is not found
+            model.addAttribute("error", "Club not found");
+            return "error"; // Redirect to an error page or handle accordingly
+        }
+    
+        return "editClub"; // Return the name of your Thymeleaf template
+    }
 
-    // // Delete a club
+
+    // Update a club
+@PostMapping("/update-club")
+public String updateClub(@ModelAttribute Clubs updatedClub, RedirectAttributes redirectAttributes) {
+    Clubs club = clubService.updateClub(updatedClub.getId(), updatedClub);
+    if (club != null) {
+        // Optionally, you can add a success message to the redirect attributes
+        redirectAttributes.addFlashAttribute("message", "Club updated successfully!");
+        return "redirect:/welcome"; // Redirect to welcome page
+    }
+    // Optionally, you can add an error message to the redirect attributes
+    redirectAttributes.addFlashAttribute("error", "Club not found.");
+    return "redirect:/welcome"; // Redirect to welcome page even if club not found
+}
+
+    // Delete a club
     // @DeleteMapping("/{clubId}")
     // public ResponseEntity<Void> deleteClub(@PathVariable Long clubId) {
     //     clubService.deleteClub(clubId);

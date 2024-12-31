@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Club</title>
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <form id="updateForm" action="/update-club" method="post">
+        <input type="hidden" name="id" id="updateClubId" th:value="${clubId}" />
+        <div>
+            <label for="clubName">Club Name:</label>
+            <input type="text" class="form-control" id="clubName" name="name" th:value="${clubName}" required>
+        </div>
+        <div>
+            <label for="clubMotto">Motto:</label>
+            <input type="text" class="form-control" id="clubMotto" name="motto" th:value="${motto}" required>
+        </div>
+        <div>
+            <label for="clubMission">Mission:</label>
+            <textarea class="form-control" id="clubMission" name="mission" required th:text="${mission}"></textarea>
+        </div>
+        <div>
+            <label for="presidentName">President Name:</label>
+            <input type="text" class="form-control" id="presidentName" name="presidentName" th:value="${presidentName}" required>
+        </div>
+        <div>
+            <label for="presidentFacebook">President Facebook:</label>
+            <input type="text" class="form-control" id="presidentFacebook" name="presidentFacebook" th:value="${presidentFacebook}" required>
+        </div>
+        <div>
+            <label for="presidentInstagram">President Instagram:</label>
+            <input type="text" class="form-control" id="presidentInstagram" name="presidentInstagram" th:value="${presidentInstagram}" required>
+        </div>
+        <div>
+            <label for="presidentEmail">President Email:</label>
+            <input type="email" class="form-control" id=" presidentEmail" name="presidentEmail" th:value="${presidentEmail}" required>
+        </div>
+        <div>
+            <label for="vicePresidentName">Vice President Name:</label>
+            <input type="text" class="form-control" id="vicePresidentName" name="vicePresidentName" th:value="${vicePresidentName}" required>
+        </div>
+        <div>
+            <label for="vicePresidentFacebook">Vice President Facebook:</label>
+            <input type="text" class="form-control" id="vicePresidentFacebook" name="vicePresidentFacebook" th:value="${vicePresidentFacebook}" required>
+        </div>
+        <div>
+            <label for="vicePresidentInstagram">Vice President Instagram:</label>
+            <input type="text" class="form-control" id="vicePresidentInstagram" name="vicePresidentInstagram" th:value="${vicePresidentInstagram}" required>
+        </div>
+        <div>
+            <label for="vicePresidentEmail">Vice President Email:</label>
+            <input type="email" class="form-control" id="vicePresidentEmail" name="vicePresidentEmail" th:value="${vicePresidentEmail}" required>
+        </div>
+        <div>
+            <label for="eventLink">Event Link:</label>
+            <input type="url" class="form-control" id="eventLink" name="eventLink" th:value="${eventLink}" required>
+        </div>
+        <button type="submit">Update Club</button>
+    </form>
+</body>
+</html>
