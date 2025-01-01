@@ -102,9 +102,18 @@
             <p class="info-item"><span>Facebook:</span> <a th:href="${club.vicePresidentFacebook}" target="_blank">Facebook Profile</a></p>
             <p class="info-item"><span>Instagram:</span> <a th:href="${club.vicePresidentInstagram}" target="_blank">Instagram Profile</a></p>
         </div>
-
+        <!-- <button onclick="showUserCount()">Show User Count</button>
+        <div class="user-count" id="userCount" style="display:none;">
+            Number of Users: <span th:text="${session.userCount}"></span>
+        </div> -->
         <button onclick="window.history.back()">Back to Dashboard</button>
     </div>
+    <script>
+        function showUserCount() {
+            const userCountDiv = document.getElementById('userCount');
+            userCountDiv.style.display = 'block'; // Show the user count div
+        }
+    </script>
 
 </body>
 </html>

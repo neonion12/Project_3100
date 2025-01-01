@@ -1,6 +1,7 @@
 package com.ProductStore.service;
 
 import com.ProductStore.entity.Clubs;
+import com.ProductStore.entity.Users;
 import com.ProductStore.repository.ClubRepository;
 
 import java.util.List;
@@ -24,6 +25,16 @@ public class ClubService {
 
     public List<Clubs> getAllClubs() {
         return clubRepository.findAll(); // Fetch all clubs from the database
+    }
+
+    public List<Users> findUsersOfClub(Long clubId) {
+        List<Users> users = clubRepository.findUsersByClubId(clubId);
+        return users; // Return the list of users
+    }
+
+    public int countUsersOfClub(Long clubId) {
+        List<Users> users = findUsersOfClub(clubId);
+        return users.size(); // Return the count of users
     }
 
     public Clubs findByName(String name) {

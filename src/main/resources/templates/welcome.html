@@ -173,6 +173,7 @@
 
         <!-- Main Content -->
         <div class="content">
+            <div th:if="${role == 'USER'}">
             <h2>All Clubs</h2>
             <div class="clubs-list">
                 <div th:each="club : ${allClubs}" class="club-card">
@@ -184,7 +185,9 @@
                     </div>
                 </div>
             </div>
+            </div>
 
+            <div th:if="${role == 'ADMIN'}">
             <h2>Your Clubs</h2>
             <div class="clubs-list">
                 <div th:each="club : ${adminClubs}" class="club-card">
@@ -195,6 +198,7 @@
                         <button th:attr="onclick='window.location.href=\'/edit-club/' + ${club.name} + '\' '">Update</button>
                     </div>
                 </div>
+            </div>
             </div>
 
             <div class="buttons">

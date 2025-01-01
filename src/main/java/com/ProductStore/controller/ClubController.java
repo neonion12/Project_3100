@@ -1,6 +1,7 @@
 package com.ProductStore.controller;
 
 import com.ProductStore.entity.Clubs;
+import com.ProductStore.entity.Users;
 import com.ProductStore.service.ClubService;
 
 import java.util.List;
@@ -26,6 +27,17 @@ public class ClubController {
 
     @Autowired
     private ClubService clubService;
+
+    @GetMapping("/club/{clubId}/users")
+    public String getUsersOfClub(@PathVariable Long clubId, Model model) {
+        List<Users> users = clubService.findUsersOfClub(clubId);
+        int userCount = clubService.countUsersOfClub(clubId);
+        
+        model.addAttribute("users", users);
+        model.addAttribute("userCount", userCount);
+        
+        return "viewedClub"; // Return the view name
+    }
 
     // Get clubs by admin ID
     @GetMapping("/admin/{adminIdd}")
@@ -88,6 +100,9 @@ public String updateClub(@ModelAttribute Clubs updatedClub, RedirectAttributes r
     @GetMapping("/view-club/{clubName}")
     public String viewClubDetails(@PathVariable String clubName, Model model) {
         Clubs club = clubService.findByName(clubName);
+        Long liveid = club.getId();
+        int userCount = clubService.countUsersOfClub(liveid);
+        model.addAttribute("userCount", liveid);
         model.addAttribute("club", club);
         return "viewedClub"; // Resolves to viewedClub.html
     }
